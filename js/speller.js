@@ -19,12 +19,39 @@ function check(inputWord) {
 	// with periodic table symbols; return array with
 	// them if so (empty array otherwise)
 
-	return [];
+	if (inputWord.length > 0) {
+		for(let element of elements) {
+			let symbol = element.symbol.toLowerCase();
+			// did the symbol match the first
+			// one or two characters in 'inputWord'?
+			if(inputWord.slice(0, symbol.length) == symbol) {
+				// still have characters left?
+				if(inputWord.length > symbol.length) {
+					let rest = check(inputWord.slice(symbol.length))
+
+					// matched successfully?
+					if(rest.length > 0) {
+						return [symbol, ...rest]
+					}
+				} else {
+					return [symbol]
+				}
+			}
+		}
+	}
+
+	return []
 }
 
 function lookup(elementSymbol) {
 	// TODO: return the element entry based on specified
 	// symbol (case-insensitive)
+
+	for(let element of elements) {
+		if(element.symbol.toLowerCase() == elementSymbol) {
+			return element
+		}
+	}
 
 	return {};
 }
